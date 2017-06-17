@@ -1,12 +1,8 @@
 <template>
-    <section class="trackInfo">
-      <header>
-        <trackPanel></trackPanel>
-      </header>
-      <article>
-        <trackMap></trackMap>
-      </article>
-    </section>
+    <div class="trackInfo">
+      <trackPanel></trackPanel>
+      <trackMap></trackMap>
+    </div>
 </template>
 
 <script>
@@ -26,11 +22,9 @@ export default {
 
 <style scoped>
 .trackInfo {
-  width: 100%; 
   height: 100%; 
   margin: 0; 
-}
-.trackInfo article {
-  height: 90%;
+  display: flex;
+  flex-flow: column;
 }
 </style>

@@ -5,7 +5,6 @@
 
 <script>
 import Leaflet from 'leaflet'
-// import L from 'leaflet'
 
 export default {
   name: 'trackMap',
@@ -38,12 +37,11 @@ export default {
 </script>
 
 <style scoped>
-.trackMap { 
-    border: 1px #888 solid; 
-    border-left: none; 
-    border-right: none; 
-    width: 100%; 
-    height: 100%; 
-    margin: 0; 
+.trackMap {
+    border: 1px #888 solid;
+    border-left: none;
+    border-right: none;
+    margin: 0;
+    flex: 1 1 auto;
 }
 </style>

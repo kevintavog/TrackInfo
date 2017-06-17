@@ -8,7 +8,7 @@
             <div class='o-grid__cell o-grid__cell--width-30'>{{track.info.startDate}}</div>
             <div class='o-grid__cell o-grid__cell--width-15'>{{track.info.distance}}</div>
             <div class='o-grid__cell o-grid__cell--width-15'>{{track.info.duration}}</div>
-            <div class='o-grid__cell o-grid__cell--width-30'>[ button to remove this track ]</div>
+            <div class='o-grid__cell o-grid__cell--width-25'>[ button to remove this track ]</div>
         </div>
 
         <div v-for="(err,index) in this.$store.state.tracks.errors" class='text_cell o-grid' >
@@ -36,6 +36,10 @@ export default {
 </script>
 
 <style scoped>
+.trackPanel {
+  flex: 0 1 auto;
+}
+
 .even {
     color:lightgreen;
 }
