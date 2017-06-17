@@ -1,6 +1,7 @@
 # trackInfo
 
-> A tool to show GPX tracks on a map
+> A tool to show GPX tracks on a map in a browser.
+Uses Vue.js and Leaflet.
 
 ## Build Setup
 
