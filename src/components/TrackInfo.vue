@@ -30,4 +30,7 @@ export default {
   height: 100%; 
   margin: 0; 
 }
+.trackInfo article {
+  height: 90%;
+}
 </style>

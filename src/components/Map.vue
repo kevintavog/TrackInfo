@@ -1,20 +1,38 @@
 <template>
-    <div class="trackMap">
-        map
-        <div v-for="(track,index) in this.$store.state.tracks.list" class='text_cell o-grid' :class="{'even':index % 2 == 0,'odd':!(index % 2 == 0)}" >
-            <div class='o-grid__cell o-grid__cell--width-30'>{{track.info.name}}</div>
-            <div class='o-grid__cell o-grid__cell--width-30'>[ button to remove this track ]</div>
-        </div>
+    <div class='trackMap' id='map'>
     </div>
 </template>
 
 <script>
+import Leaflet from 'leaflet'
+// import L from 'leaflet'
+
 export default {
   name: 'trackMap',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      map: null
     }
+  },
+
+  mounted: function () {
+    var newMap = Leaflet.map('map', {
+      center: [47.62060841124417, -122.3492968082428],
+      zoom: 10,
+      minZoom: 3,
+      zoomControl: false
+    })
+
+    Leaflet.control.zoom({ position: 'topright' }).addTo(newMap)
+
+    Leaflet.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+    }).addTo(newMap)
+
+    Leaflet.control.scale({ position: 'bottomright' }).addTo(newMap)
+
+    this.map = newMap
   }
 }
 </script>

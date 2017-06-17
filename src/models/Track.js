@@ -43,12 +43,28 @@ export default class Track {
 
       var tracks = this.buildTracks(errors, data.gpx.trk)
       var waypoints = this.buildWayPoints(errors, data.gpx.wpt)
-      this.info = {
+      var trackInfo = {
         tracks: tracks,
         waypoints: waypoints,
         bounds: bounds,
         name: name
       }
+
+      if (tracks && tracks.length > 0) {
+        trackInfo.startDate = tracks[0].minTimestamp.toDateString() + ', ' + tracks[0].minTimestamp.toLocaleTimeString()
+
+        var distance = 0
+        var duration = 0
+        tracks.forEach(t => {
+          distance += t.distance
+          duration += t.duration
+        })
+
+        trackInfo.distance = Geo.metersToMiles(distance).toFixed(2) + ' mi'
+        trackInfo.duration = Geo.displayableDuration(duration * 1000)
+      }
+
+      this.info = trackInfo
     })
   }
 
@@ -125,6 +141,8 @@ export default class Track {
       se.duration = 0
       se.elevationGain = se.elevationLoss = 0
       for (var r of se.runs) {
+        console.log('From %s to %s; distance: %d, duration: %d, elevation: %d & %d',
+          r.minTimestamp, r.maxTimestamp, r.distance, r.duration, r.elevationGain, r.elevationLoss)
         se.minTimestamp = this.minDate(se.minTimestamp, r.minTimestamp)
         se.maxTimestamp = this.maxDate(se.maxTimestamp, r.maxTimestamp)
         se.bounds.minLat = this.minValue(se.bounds.minLat, r.bounds.minLat)
@@ -177,12 +195,12 @@ export default class Track {
       var startingPoint = Math.max(0, i - this.speedAverageMaxPoints)
       newPoint.speed = this.getAverageSpeed(points.slice(startingPoint, i))
 
-      var timeDiff = this.calculateSeconds(newPoint, points[i - 1])
+      var timeDiff = this.calculateSecondsFromPoints(newPoint, points[i - 1])
       if (timeDiff > 1 && newPoint.distance > 100) {
         runs.push({
           points: points.slice(runStart, i),
           distance: distance,
-          duration: this.calculateSeconds(points[i - 1], points[runStart]),
+          duration: this.calculateSecondsFromDates(minTimestamp, maxTimestamp),
           elevationGain: elevationGain,
           elevationLoss: elevationLoss,
           bounds: { minLat: minLat, minLon: minLon, maxLat: maxLat, maxLon: maxLon },
@@ -210,7 +228,7 @@ export default class Track {
     runs.push({
       points: points.slice(runStart, trkpt.length + 1),
       distance: distance,
-      duration: this.calculateSeconds(points[trkpt.length - 1], points[runStart]),
+      duration: this.calculateSecondsFromDates(minTimestamp, maxTimestamp),
       elevationGain: elevationGain,
       elevationLoss: elevationLoss,
       bounds: { minLat: minLat, minLon: minLon, maxLat: maxLat, maxLon: maxLon },
@@ -282,8 +300,12 @@ export default class Track {
     }
   }
 
-  calculateSeconds (point1, point2) {
-    return Math.abs(point1.timestamp.getTime() - point2.timestamp.getTime()) / 1000
+  calculateSecondsFromPoints (point1, point2) {
+    return this.calculateSecondsFromDates(point1.timestamp, point2.timestamp)
+  }
+
+  calculateSecondsFromDates (date1, date2) {
+    return Math.abs(date1.getTime() - date2.getTime()) / 1000
   }
 
   // Return the distance between these two points in meters
@@ -298,7 +320,7 @@ export default class Track {
 
     var distance = 0
     points.forEach(e => { distance += e.distance })
-    var timeSeconds = this.calculateSeconds(points[0], points[points.length - 1])
+    var timeSeconds = this.calculateSecondsFromPoints(points[0], points[points.length - 1])
     return distance / timeSeconds
   }
 

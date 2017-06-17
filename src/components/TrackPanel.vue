@@ -4,7 +4,10 @@
             <input class="c-button--small" type="file" id="files" name="files[]" multiple="true" v-on:change="addLocalFiles($event)" />
         </div>
         <div v-for="(track,index) in this.$store.state.tracks.list" class='text_cell o-grid' :class="{'even':index % 2 == 0,'odd':!(index % 2 == 0)}" >
-            <div class='o-grid__cell o-grid__cell--width-30'>{{track.info.name}}</div>
+            <div class='o-grid__cell o-grid__cell--width-15'>{{track.info.name}}</div>
+            <div class='o-grid__cell o-grid__cell--width-30'>{{track.info.startDate}}</div>
+            <div class='o-grid__cell o-grid__cell--width-15'>{{track.info.distance}}</div>
+            <div class='o-grid__cell o-grid__cell--width-15'>{{track.info.duration}}</div>
             <div class='o-grid__cell o-grid__cell--width-30'>[ button to remove this track ]</div>
         </div>
 
@@ -33,9 +36,6 @@ export default {
 </script>
 
 <style scoped>
-.text_cell {
-}
-
 .even {
     color:lightgreen;
 }
