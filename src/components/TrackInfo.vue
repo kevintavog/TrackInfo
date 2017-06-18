@@ -14,7 +14,6 @@ export default {
   name: 'trackInfo',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
     }
   }
 }

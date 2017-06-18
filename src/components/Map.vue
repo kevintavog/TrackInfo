@@ -4,6 +4,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Leaflet from 'leaflet'
 
 export default {
@@ -11,6 +12,20 @@ export default {
   data () {
     return {
       map: null
+    }
+  },
+
+  computed: {
+    ...mapGetters([{
+      trackList: 'trackList'
+    }, {
+      trackErrors: 'trackErrors'
+    }])
+  },
+
+  watch: {
+    list: function (oldVal, newVal) {
+      console.log('tracks changed')
     }
   },
 

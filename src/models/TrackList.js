@@ -7,6 +7,11 @@ const trackList = {
     errors: []
   },
 
+  getters: {
+    trackList: state => { return state.list },
+    trackErrors: state => { return state.errors }
+  },
+
   mutations: {
     addFiles (state, fileList) {
       for (var file of fileList) {

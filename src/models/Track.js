@@ -141,8 +141,8 @@ export default class Track {
       se.duration = 0
       se.elevationGain = se.elevationLoss = 0
       for (var r of se.runs) {
-        console.log('From %s to %s; distance: %d, duration: %d, elevation: %d & %d',
-          r.minTimestamp, r.maxTimestamp, r.distance, r.duration, r.elevationGain, r.elevationLoss)
+        // console.log('From %s to %s; distance: %d, duration: %d, elevation: %d & %d',
+        //   r.minTimestamp, r.maxTimestamp, r.distance, r.duration, r.elevationGain, r.elevationLoss)
         se.minTimestamp = this.minDate(se.minTimestamp, r.minTimestamp)
         se.maxTimestamp = this.maxDate(se.maxTimestamp, r.maxTimestamp)
         se.bounds.minLat = this.minValue(se.bounds.minLat, r.bounds.minLat)
