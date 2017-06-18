@@ -3,8 +3,6 @@ import Geo from './geo'
 
 export default class Track {
 
-  static speedAverageMaxPoints = 10
-
   // name
   // bounds { minLat, minLng, maxLat, maxLon }
   // minTimestamp
@@ -23,6 +21,7 @@ export default class Track {
 
   constructor () {
     this.info = {}
+    this.speedAverageMaxPoints = 10
   }
 
   // Parse the file, updating 'this.info' or adding a message to 'errors'
@@ -38,7 +37,7 @@ export default class Track {
         maxLat: Number(data.gpx.bounds.$.maxlat),
         minLat: Number(data.gpx.bounds.$.minlat),
         maxLon: Number(data.gpx.bounds.$.maxlon),
-        minLon: Number(data.gpx.bounds.$.maxlat)
+        minLon: Number(data.gpx.bounds.$.minlon)
       }
 
       var tracks = this.buildTracks(errors, data.gpx.trk)
@@ -180,6 +179,7 @@ export default class Track {
       minLon = maxLon = points[0].lon
     }
 
+    console.log('max points: %d', this.speedAverageMaxPoints)
     for (var i = 1; i < trkpt.length; ++i) {
       var newPoint = this.mapPoint(trkpt[i])
       newPoint.distance = this.calculateDistance(points[i - 1], newPoint)
@@ -313,14 +313,15 @@ export default class Track {
     return Geo.getDistance(point1, point2)
   }
 
-  getAverageSpeed (points) {
-    if (points.length < 2) {
+  getAverageSpeed (pts) {
+    if (pts.length < 2) {
       return 0
     }
 
     var distance = 0
-    points.forEach(e => { distance += e.distance })
-    var timeSeconds = this.calculateSecondsFromPoints(points[0], points[points.length - 1])
+    pts.forEach(e => { distance += e.distance })
+    var timeSeconds = this.calculateSecondsFromPoints(pts.slice(-1)[0], pts[0])
+    // console.log('average - points: %d, distance: %d, seconds: %d', pts.length, distance, timeSeconds)
     return distance / timeSeconds
   }
 
