@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import TrackInfo from '@/components/TrackInfo'
+import GpxMapper from '@/components/GpxMapper'
 
 Vue.use(Router)
 
@@ -8,8 +8,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'TrackInfo',
-      component: TrackInfo
+      name: 'gpxMapper',
+      component: GpxMapper
     }
   ]
 })

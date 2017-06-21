@@ -1,5 +1,5 @@
 <template>
-    <div class="trackInfo">
+    <div class="gpxMapper">
       <trackPanel></trackPanel>
       <trackMap></trackMap>
     </div>
@@ -11,7 +11,7 @@ import trackMap from './Map.vue'
 
 export default {
   components: { trackMap, trackPanel },
-  name: 'trackInfo',
+  name: 'gpxMapper',
   data () {
     return {
     }
@@ -20,7 +20,7 @@ export default {
 </script>
 
 <style scoped>
-.trackInfo {
+.gpxMapper {
   height: 100%; 
   margin: 0; 
   display: flex;
