@@ -20,10 +20,25 @@ export default new Vuex.Store({
         if (existingIndex < 0) {
           loadFile(state.trackList, state.trackErrors, file)
         } else {
-          state.errors.push(sprintf.sprintf('Track already exists: %s at %d', file.name, existingIndex))
+          state.trackErrors.push(sprintf.sprintf('Track already exists: %s at %d', file.name, existingIndex))
         }
       }
+    },
+
+    removeTrack (state, track) {
+      var index = state.trackList.indexOf(track)
+      if (index >= 0) {
+        state.trackList.splice(index, 1)
+      }
+    },
+
+    removeError (state, error) {
+      var index = state.trackErrors.indexOf(error)
+      if (index >= 0) {
+        state.trackErrors.splice(index, 1)
+      }
     }
+
   }
 })
 
@@ -42,7 +57,7 @@ function loadFile (list, errors, file) {
 
 function getNameIndex (list, name) {
   for (var i = 0; i < list.length; i++) {
-    if (list[i].name === name) {
+    if (list[i].info.name === name) {
       return i
     }
   }

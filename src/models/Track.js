@@ -54,13 +54,19 @@ export default class Track {
 
         var distance = 0
         var duration = 0
+        var eleGain = 0
+        var eleLoss = 0
         tracks.forEach(t => {
           distance += t.distance
           duration += t.duration
+          eleGain += t.elevationGain
+          eleLoss += t.elevationLoss
         })
 
         trackInfo.distance = Geo.metersToMiles(distance).toFixed(2) + ' mi'
         trackInfo.duration = Geo.displayableDuration(duration * 1000)
+        trackInfo.elevationGain = Geo.metersToFeet(eleGain).toFixed(0)
+        trackInfo.elevationLoss = Geo.metersToFeet(eleLoss).toFixed(0)
       }
 
       this.info = trackInfo
@@ -179,7 +185,6 @@ export default class Track {
       minLon = maxLon = points[0].lon
     }
 
-    console.log('max points: %d', this.speedAverageMaxPoints)
     for (var i = 1; i < trkpt.length; ++i) {
       var newPoint = this.mapPoint(trkpt[i])
       newPoint.distance = this.calculateDistance(points[i - 1], newPoint)

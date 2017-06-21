@@ -72,7 +72,6 @@ export default {
 
   methods: {
     addGpx: function (gpx) {
-      console.log('gpx: %o', gpx)
       var trackLayers = []
 
       gpx.tracks.forEach(t => {
@@ -102,7 +101,7 @@ export default {
 
             var line = new Leaflet.Polyline(
               latLngList,
-              { color: 'red', weight: 6, clickable: true, lineCap: 'square', lineJoin: 'miter' })
+              { color: 'red', weight: 7, clickable: true, lineCap: 'square', lineJoin: 'miter' })
             line.on('click', e => {
               this.midPointPopup(s, r, e.latlng)
             })
